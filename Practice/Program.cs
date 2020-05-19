@@ -6,37 +6,56 @@ namespace Practice
 {
     class Program
     {
-        public static bool IsValidSubsequence(List<int> array, List<int> sequence)
+        public static List<int[]> ThreeNumberSum(int[] array, int targetSum)
         {
-            int x = 0;
-            int y = 0;
+            List<int[]> return_array = new List<int[]>();
+            Array.Sort(array);
 
-            while(x < array.Count)
+            int x, y;
+
+            for(int i = 0; i < array.Length; i++)
             {
-                if(array[x] == sequence[y])
+                x = i + 1;
+                y = array.Length - 1;
+
+                while (x < y)
                 {
-                    if(y == sequence.Count - 1)
+                    if (array[x] + array[y] + array[i] == targetSum)
                     {
-                        return true;
+                        return_array.Add(new int[] { array[i], array[x], array[y]});
+                        x++;
+                        y--;
+                        continue;
                     }
-                    x++;
-                    y++;
+
+                    if (array[x] + array[y] + array[i] < targetSum)
+                    {
+                        x++;
+                        continue;
+                    }
+
+                    if (array[x] + array[y] + array[i] > targetSum)
+                    {
+                        y--;
+                        continue;
+                    }
                 }
-                else
-                {
-                    x++;
-                }
+
+
             }
-            return false;
+
+            return return_array;
+            
         }
 
 
         static void Main(string[] args)
         {
-            List<int> array = new List<int> { 5,1,22,25,6,-1,8,10};
-            List<int> sequence = new List<int> { 1, 6, -1, 10 };
+            int[] array = new int[] { -8, -6, 1, 2, 3, 5, 6, 12};
+            int targetSum = 0;
 
-            Console.WriteLine(IsValidSubsequence(array, sequence));
+            var output = ThreeNumberSum(array, targetSum);
+            
         }
 
 
