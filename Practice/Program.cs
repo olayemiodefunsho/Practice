@@ -6,44 +6,37 @@ namespace Practice
 {
     class Program
     {
-        public static int[] TwoNumberSum(int[] array, int targetSum)
+        public static bool IsValidSubsequence(List<int> array, List<int> sequence)
         {
-            int[] return_array = new int[2];
-            Array.Sort(array);
-
             int x = 0;
-            int y = array.Length - 1;
+            int y = 0;
 
-            while (x < y)
+            while(x < array.Count)
             {
-                if (array[x] + array[y] == targetSum)
+                if(array[x] == sequence[y])
                 {
-                    return new int[] { array[x], array[y] };                   
+                    if(y == sequence.Count - 1)
+                    {
+                        return true;
+                    }
+                    x++;
+                    y++;
                 }
-
-                if (array[x] + array[y] < targetSum)
+                else
                 {
                     x++;
-                    continue;
-                }
-
-                if (array[x] + array[y] > targetSum)
-                {
-                    y--;
-                    continue;
                 }
             }
-
-
-            return new int[0];
+            return false;
         }
 
 
         static void Main(string[] args)
         {
-            int[] array = new int[] {-4,-1,1,3,5,6,8,11};
-            int targetSum = 13;
-            Console.WriteLine(TwoNumberSum(array, targetSum));
+            List<int> array = new List<int> { 5,1,22,25,6,-1,8,10};
+            List<int> sequence = new List<int> { 1, 6, -1, 10 };
+
+            Console.WriteLine(IsValidSubsequence(array, sequence));
         }
 
 
