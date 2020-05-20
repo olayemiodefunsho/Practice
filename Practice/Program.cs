@@ -6,55 +6,63 @@ namespace Practice
 {
     class Program
     {
-        public static List<int[]> ThreeNumberSum(int[] array, int targetSum)
+        public static int[] SmallestDifference(int[] arrayOne, int[] arrayTwo)
         {
-            List<int[]> return_array = new List<int[]>();
-            Array.Sort(array);
+            Array.Sort(arrayOne);
+            Array.Sort(arrayTwo);
+            var return_array = new int[2];
 
-            int x, y;
+            int x = 0;
+            int y = 0;
 
-            for(int i = 0; i < array.Length; i++)
+            int difference = int.MaxValue;
+            int holder = 0;
+
+
+            while (x < arrayOne.Length && y < arrayTwo.Length)
             {
-                x = i + 1;
-                y = array.Length - 1;
-
-                while (x < y)
+                if(arrayOne[x] == arrayTwo[y])
                 {
-                    if (array[x] + array[y] + array[i] == targetSum)
-                    {
-                        return_array.Add(new int[] { array[i], array[x], array[y]});
-                        x++;
-                        y--;
-                        continue;
-                    }
-
-                    if (array[x] + array[y] + array[i] < targetSum)
-                    {
-                        x++;
-                        continue;
-                    }
-
-                    if (array[x] + array[y] + array[i] > targetSum)
-                    {
-                        y--;
-                        continue;
-                    }
+                    return_array[0] = arrayOne[x];
+                    return_array[1] = arrayTwo[y];
                 }
 
-
+                if(arrayOne[x] < arrayTwo[y])
+                {
+                    holder = arrayTwo[y] - arrayOne[x];
+                    if(holder < difference)
+                    {
+                        difference = holder;
+                        return_array[0] = arrayOne[x];
+                        return_array[1] = arrayTwo[y];
+                    }
+                    x++;
+                }
+                else
+                {
+                    holder = arrayOne[x] - arrayTwo[y];
+                    if (holder < difference)
+                    {
+                        difference = holder;
+                        return_array[0] = arrayOne[x];
+                        return_array[1] = arrayTwo[y];
+                    }
+                    y++;
+                }
             }
 
+
             return return_array;
-            
         }
 
 
         static void Main(string[] args)
         {
-            int[] array = new int[] { -8, -6, 1, 2, 3, 5, 6, 12};
-            int targetSum = 0;
+            int[] arrayOne = new int[] {-1, 3, 5, 10, 20, 28};
+            int[] arrayTwo = new int[] { 15, 17, 26, 134, 135};
+            
 
-            var output = ThreeNumberSum(array, targetSum);
+            var output = SmallestDifference(arrayOne, arrayTwo);
             
         }
 
