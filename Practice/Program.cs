@@ -6,63 +6,47 @@ namespace Practice
 {
     class Program
     {
-        public static int[] SmallestDifference(int[] arrayOne, int[] arrayTwo)
+        public static List<int> MoveElementToEnd(List<int> array, int toMove)
         {
-            Array.Sort(arrayOne);
-            Array.Sort(arrayTwo);
-            var return_array = new int[2];
-
             int x = 0;
-            int y = 0;
-
-            int difference = int.MaxValue;
+            int y = array.Count - 1;
             int holder = 0;
 
-
-            while (x < arrayOne.Length && y < arrayTwo.Length)
+            while (x < y)
             {
-                if(arrayOne[x] == arrayTwo[y])
+                if (array[x] != 2)
                 {
-                    return_array[0] = arrayOne[x];
-                    return_array[1] = arrayTwo[y];
+                    x++;
+                    continue;
                 }
 
-                if(arrayOne[x] < arrayTwo[y])
+                if (array[y] == 2)
                 {
-                    holder = arrayTwo[y] - arrayOne[x];
-                    if(holder < difference)
-                    {
-                        difference = holder;
-                        return_array[0] = arrayOne[x];
-                        return_array[1] = arrayTwo[y];
-                    }
-                    x++;
+                    y--;
+                    continue;
                 }
-                else
-                {
-                    holder = arrayOne[x] - arrayTwo[y];
-                    if (holder < difference)
-                    {
-                        difference = holder;
-                        return_array[0] = arrayOne[x];
-                        return_array[1] = arrayTwo[y];
-                    }
-                    y++;
-                }
+
+                holder = array[x];
+                array[x] = array[y];
+                array[y] = holder;
+                x++;
+                y--;
             }
 
 
-            return return_array;
+
+            return array;
         }
 
 
         static void Main(string[] args)
         {
-            int[] arrayOne = new int[] {-1, 3, 5, 10, 20, 28};
-            int[] arrayTwo = new int[] { 15, 17, 26, 134, 135};
-            
+            List<int> array = new List<int> { 3, 1, 2, 4, 5 };
+            int toMove = 3;
 
-            var output = SmallestDifference(arrayOne, arrayTwo);
+
+
+            var output = MoveElementToEnd(array, toMove);
             
         }
 
