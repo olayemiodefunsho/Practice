@@ -6,47 +6,36 @@ namespace Practice
 {
     class Program
     {
-        public static List<int> MoveElementToEnd(List<int> array, int toMove)
+        public static bool IsMonotonic(int[] array)
         {
-            int x = 0;
-            int y = array.Count - 1;
-            int holder = 0;
+            bool is_mono_asc = true;
+            bool is_mono_desc = true;
 
-            while (x < y)
+
+            for(int i = 0; i < array.Length - 1; i++)
             {
-                if (array[x] != 2)
+                if (!is_mono_asc && !is_mono_desc) break;
+
+                if(array[i] > array[i+1])
                 {
-                    x++;
-                    continue;
+                    is_mono_asc = false;
                 }
 
-                if (array[y] == 2)
+                if (array[i] < array[i + 1])
                 {
-                    y--;
-                    continue;
+                    is_mono_desc = false;
                 }
-
-                holder = array[x];
-                array[x] = array[y];
-                array[y] = holder;
-                x++;
-                y--;
             }
 
-
-
-            return array;
+            return is_mono_asc || is_mono_desc;
         }
 
 
         static void Main(string[] args)
         {
-            List<int> array = new List<int> { 3, 1, 2, 4, 5 };
-            int toMove = 3;
+            int[] array = new int[] { -1, -2, -3, -4, -5 };         
 
-
-
-            var output = MoveElementToEnd(array, toMove);
+            var output = IsMonotonic(array);
             
         }
 
