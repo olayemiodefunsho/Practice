@@ -6,40 +6,62 @@ namespace Practice
 {
     class Program
     {
-        public static bool IsMonotonic(int[] array)
+        public static List<int> SpiralTraverse(int[,] array)
         {
-            bool is_mono_asc = true;
-            bool is_mono_desc = true;
+            int sc = 0;
+            int ec = array.GetLength(1) - 1;
+            int sr = 0;
+            int er = array.GetLength(0) - 1;
 
+            var return_list = new List<int>();
 
-            for(int i = 0; i < array.Length - 1; i++)
+            while(sr <= er && sc <= ec)
             {
-                if (!is_mono_asc && !is_mono_desc) break;
-
-                if(array[i] > array[i+1])
+                for (int i = sc; i <= ec; i++)
                 {
-                    is_mono_asc = false;
+                    return_list.Add(array[sr, i]);
                 }
 
-                if (array[i] < array[i + 1])
+                if (sr == er) break;
+
+                for (int i = sr + 1; i <= er; i++)
                 {
-                    is_mono_desc = false;
+                    return_list.Add(array[i, ec]);
                 }
+
+                if (sc == ec) break;
+
+                for (int i = ec - 1; i >= sc; i--)
+                {
+                    return_list.Add(array[er, i]);
+                }
+
+                for (int i = er - 1; i >= sr + 1; i--)
+                {
+                    return_list.Add(array[i, sc]);
+                }
+
+                sc++;
+                ec--;
+                sr++;
+                er--;
             }
 
-            return is_mono_asc || is_mono_desc;
+            return return_list;
+
+
         }
 
 
         static void Main(string[] args)
         {
-            int[] array = new int[] { -1, -2, -3, -4, -5 };         
+            int[,] array = new int[,] { { 1, 2, 3 }, { 12, 13, 4 }, { 11, 14, 5 }, { 10, 15, 6 }, { 9, 8, 7 } };         
 
-            var output = IsMonotonic(array);
-            
+            var output = SpiralTraverse(array);
+
         }
 
 
-        
+
     }
 }
