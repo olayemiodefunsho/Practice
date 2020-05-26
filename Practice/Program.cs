@@ -36,6 +36,7 @@ namespace Practice
                         for (int j = i - 1; j >= 1; j--)
                         {
                             if (array[j] > array[j - 1]) curr_len++;
+                            else break;
                         }
                         if (curr_len > return_len) return_len = curr_len;
 
