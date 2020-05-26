@@ -6,58 +6,76 @@ namespace Practice
 {
     class Program
     {
-        public static List<int> SpiralTraverse(int[,] array)
+        public static int LongestPeak(int[] array)
         {
-            int sc = 0;
-            int ec = array.GetLength(1) - 1;
-            int sr = 0;
-            int er = array.GetLength(0) - 1;
+            int curr_len = 0;
+            bool is_peak = false;
+            int return_len = 0;
 
-            var return_list = new List<int>();
-
-            while(sr <= er && sc <= ec)
+            for(int i = 1; i < array.Length - 1; i++)
             {
-                for (int i = sc; i <= ec; i++)
+                if(is_peak)
                 {
-                    return_list.Add(array[sr, i]);
+                    if (array[i] > array[i + 1])
+                    {
+                        curr_len++;
+                        if (curr_len > return_len) return_len = curr_len;
+                    }
+                    else
+                    {
+                        is_peak = false;
+                        if (curr_len > return_len) return_len = curr_len;                       
+                    }
                 }
-
-                if (sr == er) break;
-
-                for (int i = sr + 1; i <= er; i++)
+                else
                 {
-                    return_list.Add(array[i, ec]);
+                    if (array[i] > array[i - 1] && array[i] > array[i + 1])
+                    {
+                        curr_len = 3;
+                        is_peak = true;
+                        for (int j = i - 1; j >= 1; j--)
+                        {
+                            if (array[j] > array[j - 1]) curr_len++;
+                        }
+                        if (curr_len > return_len) return_len = curr_len;
+
+                    }
                 }
-
-                if (sc == ec) break;
-
-                for (int i = ec - 1; i >= sc; i--)
-                {
-                    return_list.Add(array[er, i]);
-                }
-
-                for (int i = er - 1; i >= sr + 1; i--)
-                {
-                    return_list.Add(array[i, sc]);
-                }
-
-                sc++;
-                ec--;
-                sr++;
-                er--;
+                
             }
-
-            return return_list;
-
-
+            return return_len;
         }
 
 
         static void Main(string[] args)
         {
-            int[,] array = new int[,] { { 1, 2, 3 }, { 12, 13, 4 }, { 11, 14, 5 }, { 10, 15, 6 }, { 9, 8, 7 } };         
+            int[] array = new int[] {1,
+    1,
+    1,
+    2,
+    3,
+    10,
+    12,
+    -3,
+    -3,
+    2,
+    3,
+    45,
+    800,
+    99,
+    98,
+    0,
+    -1,
+    -1,
+    2,
+    3,
+    4,
+    5,
+    0,
+    -1,
+    -1};         
 
-            var output = SpiralTraverse(array);
+            var output = LongestPeak(array);
 
         }
 
