@@ -6,77 +6,51 @@ namespace Practice
 {
     class Program
     {
-        public static int LongestPeak(int[] array)
+        public static List<int[]> FourNumberSum(int[] array, int targetSum)
         {
-            int curr_len = 0;
-            bool is_peak = false;
-            int return_len = 0;
+            var return_list = new List<int[]>();
+            var holder_dic = new Dictionary<int, List<int[]>>();
+            int key, j;
+            List<int[]> int_list;
 
-            for(int i = 1; i < array.Length - 1; i++)
-            {
-                if(is_peak)
+            for (int i = 1; i < array.Length - 1; i++)
+            {                             
+                for(j = i + 1; j <= array.Length - 1; j++)
                 {
-                    if (array[i] > array[i + 1])
+                    key = targetSum - (array[i] + array[j]);
+                    if (holder_dic.ContainsKey(key))
                     {
-                        curr_len++;
-                        if (curr_len > return_len) return_len = curr_len;
-                    }
-                    else
-                    {
-                        is_peak = false;
-                        if (curr_len > return_len) return_len = curr_len;                       
-                    }
-                }
-                else
-                {
-                    if (array[i] > array[i - 1] && array[i] > array[i + 1])
-                    {
-                        curr_len = 3;
-                        is_peak = true;
-                        for (int j = i - 1; j >= 1; j--)
+                        foreach(var item in holder_dic[key])
                         {
-                            if (array[j] > array[j - 1]) curr_len++;
-                            else break;
-                        }
-                        if (curr_len > return_len) return_len = curr_len;
-
-                    }
+                            return_list.Add(new int[] { item[0], item[1],array[i], array[j]});
+                        }                      
+                    }                   
                 }
-                
+
+                for(j = 0; j < i; j++)
+                {
+                    int_list = new List<int[]>();
+                    key = array[i] + array[j];
+                    if (!holder_dic.ContainsKey(key))
+                    {
+                        int_list.Add(new int[] { array[j], array[i] });
+                        holder_dic.Add(key, int_list);
+                    }
+
+                }
+
             }
-            return return_len;
+            // Write your code here.
+            return return_list;
         }
 
 
         static void Main(string[] args)
         {
-            int[] array = new int[] {1,
-    1,
-    1,
-    2,
-    3,
-    10,
-    12,
-    -3,
-    -3,
-    2,
-    3,
-    45,
-    800,
-    99,
-    98,
-    0,
-    -1,
-    -1,
-    2,
-    3,
-    4,
-    5,
-    0,
-    -1,
-    -1};         
+            int[] array = new int[] { 5, -5, -2, 2, 3, -3 };
+            int targetSum = 0;
 
-            var output = LongestPeak(array);
+            var output = FourNumberSum(array, targetSum);
 
         }
 
