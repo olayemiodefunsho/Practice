@@ -12,6 +12,7 @@ namespace Practice
             var holder_dic = new Dictionary<int, List<int[]>>();
             int key, j;
             List<int[]> int_list;
+            bool if_exist = false;
 
             for (int i = 1; i < array.Length - 1; i++)
             {                             
@@ -35,6 +36,22 @@ namespace Practice
                     {
                         int_list.Add(new int[] { array[j], array[i] });
                         holder_dic.Add(key, int_list);
+                    }
+                    else
+                    {
+                        foreach (var item in holder_dic[key])
+                        {
+                            if((array[i] == item[0] && array[j] == item[1]) || (array[j] == item[0] && array[i] == item[1]))
+                            {
+                                if_exist = true;
+                                break;
+                            }
+                        }
+
+                        if(!if_exist)
+                        {
+                            holder_dic[key].Add(new int[] { array[j], array[i] });
+                        }
                     }
 
                 }
