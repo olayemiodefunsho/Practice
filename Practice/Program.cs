@@ -6,72 +6,47 @@ namespace Practice
 {
     class Program
     {
-        public static int[] SubarraySort(int[] array)
+        //MIN REWARDS - minimiun reward you can give to members of an array deoending on their score
+        //create an array with same size and fill with all 1s
+        //go thru scores from left to right
+        //For every element that is greater than the one before it
+        //update it's value in array with which ever is greater
+        //between it's value and the one before it plus 1
+        //now run from right to left
+        //For every element that is greater than the one before it
+        //update array with max just as above
+        //npw return the sum of all elements in array
+        public static int MinRewards(int[] scores)
         {
-            var unsorted_list = new List<int>();
-            bool not_last = false;
-            
+            var array = new int[scores.Length];
+            Array.Fill(array, 1);
 
-            for(int i = 1; i < array.Length - 1; i++)
+            for(int i = 1; i < scores.Length; i++)
             {
-                if(!(array[i] >= array[i - 1] && array[i] <= array[i+1]))
+                if(scores[i] > scores[i - 1])
                 {
-                    unsorted_list.Add(i);
+                    array[i] = Math.Max(array[i], array[i - 1] + 1);
                 }
             }
 
-            if (array[array.Length - 1] < array[array.Length - 2]) unsorted_list.Add(array.Length - 1);
-
-            if (unsorted_list.Count == 0) return new int[] { -1,-1};
-
-            int s_index = unsorted_list[0];
-            int l_index = unsorted_list[0];
-
-            foreach (var item in unsorted_list)
+            for (int i = scores.Length - 2; i >= 0; i--)
             {
-                if(array[item] > array[l_index])
+                if (scores[i] > scores[i + 1])
                 {
-                    l_index = item;
-                }
-
-                if (array[item] < array[s_index])
-                {
-                    s_index = item;
+                    array[i] = Math.Max(array[i], array[i + 1] + 1);
                 }
             }
 
-            for(int i = 0; i < array.Length; i++)
-            {
-                if(array[s_index] < array[i])
-                {
-                    s_index = i;
-                    break;
-                }
-            }
 
-            for(int i = s_index + 1; i < array.Length; i++)
-            {
-
-                if (array[l_index] < array[i])
-                {
-                    l_index = i - 1;
-                    not_last = true;
-                    break;
-                }
-            }
-
-            if (!not_last) l_index = array.Length - 1;
-
-
-            return new int[] { s_index, l_index };
+            return array.Sum();
         }
 
 
         static void Main(string[] args)
         {
-            int[] array = new int[] { 1,2 };
+            int[] scores = new int[] { 8,4,2,1,3,6,7,9,5};
 
-            var output = SubarraySort(array);
+            var output = MinRewards(scores);
 
         }
 
