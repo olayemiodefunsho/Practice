@@ -6,31 +6,38 @@ namespace Practice
 {
     class Program
     {
-        //String  - Palindrome check
-        //put a pointer on the first and last string
-        //keep comparong both and moving closer till thy meet
-        //if at any point they differ fail and return false
-        //if it gets to the end return true, that's a palindrome
-        public static bool IsPalindrome(string str)
+        //String  - Ceasar Cipher Encryptor
+        //calculate key by using key modulo 26
+        //that gives number of steps forward we will go
+        //create a string of all alphabets
+        //iterate through every character in the given string
+        //if the index of the current character plus key is greater than 25
+        //minus 25 from the sum to get new index
+        //convert new index back to character and append to new string
+        public static string CaesarCypherEncryptor(string str, int key)
         {
-            bool return_value = true;
-            int i = 0;
-            int j = str.Length - 1;
-            while(i < j)
+            string alpha = "abcdefghijklmnopqrstuvwxyz";
+            int realKey = key % 26;
+            int sum = 0;
+            var strBuilder = new System.Text.StringBuilder();
+
+            foreach(var item in str)
             {
-                if (str[i] != str[j]) return false;
-                i++;
-                j--;
+                sum = alpha.IndexOf(item) + realKey;
+                if (sum > 25) sum -= 26;
+                strBuilder.Append(alpha[sum]);
+
             }
 
-            return return_value;
+            return strBuilder.ToString();
         }
 
 
         static void Main(string[] args)
         {
-            string str = "abcdcba";
-            var output = IsPalindrome(str);
+            string str = "xyz";
+            int key = 3;
+            var output = CaesarCypherEncryptor(str, key);
             
 
         }
