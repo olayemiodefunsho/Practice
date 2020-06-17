@@ -1,43 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Practice
 {
     class Program
     {
-        //String  - Ceasar Cipher Encryptor
-        //calculate key by using key modulo 26
-        //that gives number of steps forward we will go
-        //create a string of all alphabets
-        //iterate through every character in the given string
-        //if the index of the current character plus key is greater than 25
-        //minus 25 from the sum to get new index
-        //convert new index back to character and append to new string
-        public static string CaesarCypherEncryptor(string str, int key)
+        //String  - Longest Paloindromic Subsring
+        //pick each characer one by one
+        //at every chracter check if its the center of a palindrome
+        //two ways to check
+        //one is for odd lenght and other for even lenght
+        //for odd length check the two letters by left and right and expand onwards if they are the same
+        //for even lengh check letter before the current letter and expand onwards if they are the same
+        //continue to expand till the palindrome ends then get the length
+        //continue for all letters till you get the longest string
+        public static string LongestPalindromicSubstring(string str)
         {
-            string alpha = "abcdefghijklmnopqrstuvwxyz";
-            int realKey = key % 26;
-            int sum = 0;
-            var strBuilder = new System.Text.StringBuilder();
-
-            foreach(var item in str)
+            string pal = "";
+            string holder = "";
+            int x = 0; int y = 0;
+            for(int i = 0; i < str.Length; i++)
             {
-                sum = alpha.IndexOf(item) + realKey;
-                if (sum > 25) sum -= 26;
-                strBuilder.Append(alpha[sum]);
+                if(i == 4)
+                {
+
+                }
+                if(i == 0)
+                {
+                    pal = str[0].ToString();
+                    continue;
+                }
+
+                x = i - 1;
+                y = i + 1;
+                holder = str[i].ToString();
+
+                while(x >= 0 && y <= str.Length - 1)
+                {
+                    if (str[x] != str[y]) break;
+                    else
+                    {
+                        holder = str[x] + holder + str[y];
+                    }
+                    x--;
+                    y++;
+                }
+
+                if (holder.Length > pal.Length) pal = holder;
+
+
+                x = i - 1;
+                y = i;
+                holder = "";
+
+                while (x >= 0 && y <= str.Length - 1)
+                {
+                    if (str[x] != str[y]) break;
+                    else
+                    {
+                        holder = str[x] + holder + str[y];
+                    }
+                    x--;
+                    y++;
+                }
+
+                if (holder.Length > pal.Length) pal = holder;
+
+
 
             }
-
-            return strBuilder.ToString();
+            return pal;
         }
 
 
         static void Main(string[] args)
         {
-            string str = "xyz";
-            int key = 3;
-            var output = CaesarCypherEncryptor(str, key);
+            string str = "abaxyzzyxf";
+            var output = LongestPalindromicSubstring(str);
             
 
         }
