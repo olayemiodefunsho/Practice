@@ -7,78 +7,57 @@ namespace Practice
 {
     class Program
     {
-        //String  - Longest Paloindromic Subsring
-        //pick each characer one by one
-        //at every chracter check if its the center of a palindrome
-        //two ways to check
-        //one is for odd lenght and other for even lenght
-        //for odd length check the two letters by left and right and expand onwards if they are the same
-        //for even lengh check letter before the current letter and expand onwards if they are the same
-        //continue to expand till the palindrome ends then get the length
-        //continue for all letters till you get the longest string
-        public static string LongestPalindromicSubstring(string str)
+        //String  - Group Anagrams
+        //pick each string one after the other
+        //create a hash table string key and list of string value
+        //sort the string and check if the sorted string is a key in the hash table
+        //if it is add to the list of string value
+        //if not create a new key and add the unsorted string to the list of string value
+        //when done with all string return all values in the hash table as a list of list of string
+        public static List<List<string>> groupAnagrams(List<string> words)
         {
-            string pal = "";
-            string holder = "";
-            int x = 0; int y = 0;
-            for(int i = 0; i < str.Length; i++)
+            var holder = new Dictionary<string, List<string>>();
+           
+            var str = new StringBuilder();
+
+            foreach (var word in words)
             {
-                if(i == 4)
+                string key = "";
+                var char_array = word.ToCharArray();
+                Array.Sort(char_array);
+
+                foreach(var xter in char_array) str.Append(xter);
+                key = str.ToString();
+                str.Clear();
+
+               
+
+                if (holder.ContainsKey(key))
                 {
-
+                    holder[key].Add(word);
                 }
-                if(i == 0)
+                else
                 {
-                    pal = str[0].ToString();
-                    continue;
+                    holder[key] = new List<string> { word };
                 }
-
-                x = i - 1;
-                y = i + 1;
-                holder = str[i].ToString();
-
-                while(x >= 0 && y <= str.Length - 1)
-                {
-                    if (str[x] != str[y]) break;
-                    else
-                    {
-                        holder = str[x] + holder + str[y];
-                    }
-                    x--;
-                    y++;
-                }
-
-                if (holder.Length > pal.Length) pal = holder;
-
-
-                x = i - 1;
-                y = i;
-                holder = "";
-
-                while (x >= 0 && y <= str.Length - 1)
-                {
-                    if (str[x] != str[y]) break;
-                    else
-                    {
-                        holder = str[x] + holder + str[y];
-                    }
-                    x--;
-                    y++;
-                }
-
-                if (holder.Length > pal.Length) pal = holder;
-
-
-
             }
-            return pal;
+
+
+            var return_list = new List<List<string>>();
+
+            foreach(var item in holder.Keys)
+            {
+                return_list.Add(holder[item]);
+            }
+
+            return return_list;
         }
 
 
         static void Main(string[] args)
         {
-            string str = "abaxyzzyxf";
-            var output = LongestPalindromicSubstring(str);
+            var words = new List<string> { "yo", "act", "flop", "tac", "cat", "oy", "olfp" };
+            var output = groupAnagrams(words);
             
 
         }
