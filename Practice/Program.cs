@@ -7,57 +7,50 @@ namespace Practice
 {
     class Program
     {
-        //String  - Group Anagrams
-        //pick each string one after the other
-        //create a hash table string key and list of string value
-        //sort the string and check if the sorted string is a key in the hash table
-        //if it is add to the list of string value
-        //if not create a new key and add the unsorted string to the list of string value
-        //when done with all string return all values in the hash table as a list of list of string
-        public static List<List<string>> groupAnagrams(List<string> words)
+        //Searching - Three Largest Numbers
+        //Initialize an array of 3 items
+        //Pick each item in the input array one by one
+        //first compare to item at index 2 which is the largest, if it larger replace and move every other number to the left
+        //if it is less compare to index 1 and so on and so forth
+        //return the array of 3 items
+        public static int[] FindThreeLargestNumbers(int[] array)
         {
-            var holder = new Dictionary<string, List<string>>();
-           
-            var str = new StringBuilder();
+            var return_array = new int[] { Int32.MinValue, Int32.MinValue, Int32.MinValue};
 
-            foreach (var word in words)
+
+            foreach(var item in array)
             {
-                string key = "";
-                var char_array = word.ToCharArray();
-                Array.Sort(char_array);
-
-                foreach(var xter in char_array) str.Append(xter);
-                key = str.ToString();
-                str.Clear();
-
-               
-
-                if (holder.ContainsKey(key))
+                if(item > return_array[2])
                 {
-                    holder[key].Add(word);
+                    return_array[0] = return_array[1];
+                    return_array[1] = return_array[2];
+                    return_array[2] = item;
                 }
                 else
                 {
-                    holder[key] = new List<string> { word };
+                    if (item > return_array[1])
+                    {
+                        return_array[0] = return_array[1];
+                        return_array[1] = item;
+                    }
+                    else
+                    {
+                        if (item > return_array[0])
+                        {
+                            return_array[0] = item;
+                        }
+                    }
                 }
             }
 
-
-            var return_list = new List<List<string>>();
-
-            foreach(var item in holder.Keys)
-            {
-                return_list.Add(holder[item]);
-            }
-
-            return return_list;
+            return return_array;
         }
 
 
         static void Main(string[] args)
         {
-            var words = new List<string> { "yo", "act", "flop", "tac", "cat", "oy", "olfp" };
-            var output = groupAnagrams(words);
+            var array = new int[] { 55,7,8 };
+            var output = FindThreeLargestNumbers(array);
             
 
         }
