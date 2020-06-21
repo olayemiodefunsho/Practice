@@ -7,50 +7,52 @@ namespace Practice
 {
     class Program
     {
-        //Searching - Three Largest Numbers
-        //Initialize an array of 3 items
-        //Pick each item in the input array one by one
-        //first compare to item at index 2 which is the largest, if it larger replace and move every other number to the left
-        //if it is less compare to index 1 and so on and so forth
-        //return the array of 3 items
-        public static int[] FindThreeLargestNumbers(int[] array)
+        //String - Longest Substring without duplication
+        //Have a variable that will always hold the starting index of longest substring
+        //Initialize the variable to zero
+        //Have a string builder to concatenate longest string as we proceed or clear as necessary
+        //Have a Hash table to store the first occurence of every string and the index
+        //traverse the string and check if each letter is already in the hash table
+        //if you find a letter already there, find the max of startindex and index of letter plus 1
+        //
+        public static string LongestSubstringWithoutDuplication(string str)
         {
-            var return_array = new int[] { Int32.MinValue, Int32.MinValue, Int32.MinValue};
+            var sb = new StringBuilder();
+            string longest_str = "";
+            string new_str = "";
+            var ht = new Dictionary<char, int>();
 
+            if(str.Length == 1) return str;
 
-            foreach(var item in array)
-            {
-                if(item > return_array[2])
+            for(int i = 0; i < str.Length; i++)
+            {                  
+                if(ht.ContainsKey(str[i]))
                 {
-                    return_array[0] = return_array[1];
-                    return_array[1] = return_array[2];
-                    return_array[2] = item;
+                    new_str = sb.ToString();
+                    if(new_str.Length > longest_str.Length) longest_str = new_str;
+                    sb.Clear();
+                    sb.Append(str[i - 1]);
+                    sb.Append(str[i]);
+                    ht.Clear();
+                    ht[str[i - 1]] = i - 1;
+                    ht[str[i]] = i;
                 }
                 else
                 {
-                    if (item > return_array[1])
-                    {
-                        return_array[0] = return_array[1];
-                        return_array[1] = item;
-                    }
-                    else
-                    {
-                        if (item > return_array[0])
-                        {
-                            return_array[0] = item;
-                        }
-                    }
+                    ht[str[i]] = i;
+                    sb.Append(str[i]);
                 }
+
+                if (i == str.Length - 1 && sb.Length > longest_str.Length) longest_str = sb.ToString();
             }
-
-            return return_array;
+            // Write your code here
+            return longest_str;
         }
-
 
         static void Main(string[] args)
         {
-            var array = new int[] { 55,7,8 };
-            var output = FindThreeLargestNumbers(array);
+            var str = "abcdeabcdefc";
+            var output = LongestSubstringWithoutDuplication(str);
             
 
         }
