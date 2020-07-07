@@ -7,54 +7,26 @@ namespace Practice
 {
     class Program
     {
-        //String - Longest Substring without duplication
-        //Have a variable that will always hold the starting index of longest substring
-        //Initialize the variable to zero
-        //Have a string builder to concatenate longest string as we proceed or clear as necessary
-        //Have a Hash table to store the first occurence of every string and the index
-        //traverse the string and check if each letter is already in the hash table
-        //if you find a letter already there, find the max of startindex and index of letter plus 1
-        //
-        public static string LongestSubstringWithoutDuplication(string str)
+        public static int BinarySearch(int[] array, int target)
         {
-            var sb = new StringBuilder();
-            string longest_str = "";
-            string new_str = "";
-            var ht = new Dictionary<char, int>();
+            int l = 0, m = 0;
+            int r = array.Length - 1;
+            while(l <= r)
+            {
+                m = (l + r) / 2;
+                if (array[m] == target) return m;
 
-            if(str.Length == 1) return str;
-
-            for(int i = 0; i < str.Length; i++)
-            {                  
-                if(ht.ContainsKey(str[i]))
-                {
-                    new_str = sb.ToString();
-                    if(new_str.Length > longest_str.Length) longest_str = new_str;
-                    sb.Clear();
-                    sb.Append(str[i - 1]);
-                    sb.Append(str[i]);
-                    ht.Clear();
-                    ht[str[i - 1]] = i - 1;
-                    ht[str[i]] = i;
-                }
-                else
-                {
-                    ht[str[i]] = i;
-                    sb.Append(str[i]);
-                }
-
-                if (i == str.Length - 1 && sb.Length > longest_str.Length) longest_str = sb.ToString();
+                if (array[m] > target) r = m - 1;
+                else l = m + 1;
             }
-            // Write your code here
-            return longest_str;
+            return -1;
         }
 
         static void Main(string[] args)
         {
-            var str = "abcdeabcdefc";
-            var output = LongestSubstringWithoutDuplication(str);
-            
-
+            var array = new int[] { 0, 1, 21, 33, 45, 45, 61, 71, 72, 73 };
+            var target = 70;
+            var output = BinarySearch(array, target);           
         }
 
 
