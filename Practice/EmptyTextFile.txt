@@ -1,14 +1,5 @@
-﻿Searching - Binary Search
-have left, right and middle pointers
-set lef and right to the first and last index
-add both, divide by 2 and round to the closest integer
-set the result to middle pointer
-if array[middle] is greater than our target
-move right to mif=dlle minus 1
-discard everything after middle
-if array[middle] is equal to target
-thats the end, number found, return middle
-if array[middle] isless than target
-move left to middle plus 1
-discard all index before middle
-repeat the cycle till target is found
+﻿Sorting - insertion Sort
+Traverse through all elements of the array
+at every element compare with all elements before it
+swap if it is less and break if it is greater
+do that till all elements have ben considered
