@@ -1,5 +1,5 @@
-﻿Sorting - insertion Sort
-Traverse through all elements of the array
-at every element compare with all elements before it
-swap if it is less and break if it is greater
-do that till all elements have ben considered
+﻿Sorting - Selection Sort
+set the index to swap to the beginning or index 0
+start comparing from the index to swap and keep looking for the smallest item
+the index at the smallest item is the one we would swap with the index to swap
+the move to the next index to swap and continue till the end

@@ -7,33 +7,32 @@ namespace Practice
 {
     class Program
     {
-        public static int[] InsertionSort(int[] array)
+        public static int[] SelectionSort(int[] array)
         {
-            int j = 0;
-            int holder = 0;
-
-           for(int i = 0; i < array.Length; i++)
-           {
-                j = i;
-                while(j > 0)
+            
+            for (int i = 0; i < array.Length; i++)
+            {
+                int k = i;
+                for (int j = i; j < array.Length; j++)
                 {
-                    if (array[j] < array[j - 1])
+                    if(array[j] < array[k])
                     {
-                        holder = array[j];
-                        array[j] = array[j - 1];
-                        array[j - 1] = holder;
-                        j--;
+                        k = j;
                     }
-                    else break;
                 }
-           }
+
+                int holder = array[i];
+                array[i] = array[k];
+                array[k] = holder;
+            }
+
             return array;
         }
 
         static void Main(string[] args)
         {
-            var array = new int[] { 3, 2, 5, 5, 6, 8, 9 };
-            var output = InsertionSort(array);           
+            var array = new int[] { 5, 6, 3, 2 };
+            var output = SelectionSort(array);           
         }
 
 
