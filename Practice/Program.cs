@@ -7,34 +7,45 @@ namespace Practice
 {
     class Program
     {
-        public static int[] SelectionSort(int[] array)
+        public static int[] SearchInSortedMatrix(int[,] matrix, int target)
         {
-            
-            for (int i = 0; i < array.Length; i++)
+            int x = 0, y = matrix.GetLength(0), maxy = y, maxx = matrix.GetUpperBound(0);
+            while((x <= maxx && x >= 0) && (y <= maxy && y >= 0))
             {
-                int k = i;
-                for (int j = i; j < array.Length; j++)
+                if(matrix[x,y] == target)
                 {
-                    if(array[j] < array[k])
-                    {
-                        k = j;
-                    }
+                    return new int[] { x, y };
                 }
 
-                int holder = array[i];
-                array[i] = array[k];
-                array[k] = holder;
+                if(target > matrix[x, y])
+                {
+                    x++;
+                    continue;
+                }
+
+                if(target < matrix[x, y])
+                {
+                    y--;
+                    continue;
+                }
             }
 
-            return array;
+            return new int[] { -1, -1 };
         }
 
         static void Main(string[] args)
-        {
-            var array = new int[] { 5, 6, 3, 2 };
-            var output = SelectionSort(array);           
+        {            
+            var array = new int[,]
+            {
+               { 1, 4, 7, 12, 15, 1000 },
+               { 2, 5, 19, 31, 32, 1001 },
+               { 3, 8, 24, 33, 35, 1002 },
+               { 40, 41, 42, 44, 45, 1003 },
+               { 99, 100, 103, 106, 128, 1004 }
+
+            };
+            int target = 43;
+            var output = SearchInSortedMatrix(array, target);           
         }
-
-
     }
 }

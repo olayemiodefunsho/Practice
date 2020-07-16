@@ -1,5 +1,9 @@
-﻿Sorting - Selection Sort
-set the index to swap to the beginning or index 0
-start comparing from the index to swap and keep looking for the smallest item
-the index at the smallest item is the one we would swap with the index to swap
-the move to the next index to swap and continue till the end
+﻿Searching - Search in sorted Matrix
+start at the top right corner, set the row index to x and column index to y
+compare number at current index to target
+if number is the same, number found return index and end
+if target is less than the number at current index move left meaning minus 1 from y
+if target is more than the number at current index move down meaning plus 1 to x
+so continue to move left everytime target is less
+and move down everytime target is more
+continue till target is found or return -1,-1 when you get to the end and target is till not foind
