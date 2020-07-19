@@ -1,22 +1,29 @@
-﻿Searching - Shifted Binary Search
+﻿Searching - Search for Range
 
-1. get the niddle index
-    1.1 add first and last index
-    1.2 divide by 2
-    1.3 round to the closest integer
+1. Set left, right and middle pointers
+    1.1 left or l is the the first index which is 0
+    1.2 right or r is the last index which is the lenght of the array minus 1
+    1.3 set middle by adding left and right, divide by 2 and take the integer part
+    1.4 create a loop that continues to run as long as l is less than r
 
+2. Three things can happen to the number at index m, it can be either equal, less than or greater than target
 
-2. check which side is sorted
-    2.1 check if left index is less than middle
-    2.2 if yes that is the sorted side
-    2.3 if no then middle to right is the sored side
+    2.1 If the number at index m is equal to our target number
+        2.1.1 check if m is zero, meaning is it at the beginning of the array, if it is, that's the end we have found our first index
+        2.1.2 this is a sorted array, the number before it can either be less or equal
+        2.1.2 if the number before it is less, thats the end we have found our left most range
+        2.1.3 if the number before it is equal move r to the number before it and continue
 
+    2.2 if the number at index m is less than target
+        2.2.1 since the array is sorted it means all number before m are smaller than target
+        2.2.2 move l to the index after m and continue
 
-3. check if your target is in te sorted side that determines which side you discard
-    3.1 if left to middle is the sorted side
-    3.2 check if target is greater than or equal to left and less than or equal to right
-    3.3 if right is the sorted side
-    3.4 check if target is greater or equal to middle and less than or equal to right
+    2.3 if the number at index m is greater than target
+        2.3.1 It means all the numbers after m are greater than target too
+        2.3.2 move r to the index before m and continue
 
-4. if target is present discard other side or vice versa and repeat cycle
+3. if after going through we don't find our target just end the process and return -1 and -1
+
+4. Repeat this process all over again for the right most index while inverting all the factors
+
 

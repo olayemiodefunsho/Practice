@@ -7,34 +7,74 @@ namespace Practice
 {
     class Program
     {
-        public static int ShiftedBinarySearch(int[] array, int target)
+        public static int[] SearchForRange(int[] array, int target)
         {
-            int l = 0, r = array.Length - 1, m = 0;
-
+            int l = 0, r = array.Length - 1;
+            int l_index = -1, r_index = -1;
             while(l <= r)
             {
-                m = (l + r) / 2;
-                if (array[m] == target) return m;
-                if(array[l] <= array[m])
+                int m = (l + r) / 2;
+                if(array[m] == target)
                 {
-                    if(target >= array[l] && target <= array[m]) r = m - 1;
-                    else l = m + 1;
+                    if ((m == 0) || (array[m - 1] < array[m]))
+                    {
+                        l_index = m;
+                        break;
+                    }
+
+                    if(array[m - 1] == target)
+                    {
+                        r = m - 1;
+                        continue;
+                    }
                 }
-                else
+
+                if(array[m] < target)
                 {
-                    if (target >= array[m] && target <= array[r]) l = m + 1;
-                    else r = m - 1;
+                    l = m + 1;
+                    continue;
                 }
+
+                if(array[m] > target) r = m - 1;                            
             }
 
-            return -1;
+            l = 0; r = array.Length - 1;
+            while (l <= r)
+            {
+                int m = (l + r) / 2;
+                if (array[m] == target)
+                {
+                    if ((m == array.Length -1) || (array[m] < array[m + 1]))
+                    {
+                        r_index = m;
+                        break;
+                    }
+
+                    if (array[m + 1] == target)
+                    {
+                        l = m + 1;
+                        continue;
+                    }
+                }
+
+                if (array[m] < target)
+                {
+                    l = m + 1;
+                    continue;
+                }
+
+                if (array[m] > target) r = m - 1;
+            }
+
+
+            return new int[] { l_index, r_index };
         }
 
         static void Main(string[] args)
         {
-            var array = new int[] { 72, 73, 0, 1, 21, 33, 37, 45, 61, 71 };
-            int target = 72;
-            var output = ShiftedBinarySearch(array, target);           
+            var array = new int[] { 0, 1, 21, 33, 45, 45, 45, 45, 61, 71, 73 };
+            int target = 45;
+            var output = SearchForRange(array, target);           
         }
     }
 }
